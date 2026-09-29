@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jerome Robles Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Montserrat:wght@600;700;800&family=Inter:wght@400;500&display=swap">
+<style>
+/* Layout: editorial 12-col page; a pinned hero where the name holds still while design boards stack over the stage, then a pinned type-wipe, a card grid and a capability grid. */
+:root{
+  --bg:#F7F5F2;
+  --ink:#111111;
+  --navy:#26344D;
+  --card:#D9D6D2;
+  --card-2:#BDB9B5;
+  --card-3:#CCC8C3;
+  --tile:#FCFBF9;
+  --line:#E4E0DB;
+  --ghost:#DAD6D1;
+  --muted:#6E6A66;
+  --blue:#5B7FA3;
+  --pink:#B65F67;
+  --foot:#2B2A28;
+  --foot-ink:#F7F5F2;
+  --foot-muted:#A9A5A0;
+
+  --f-name:"League Spartan","Montserrat","Helvetica Neue",Arial,sans-serif;
+  --f-head:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+
+  --gutter:clamp(16px,4.4vw,48px);
+  --radius:18px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-weight:500;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:4px}
+
+.wrap{padding-inline:var(--gutter)}
+.label{font-family:var(--f-head);font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+.chip{display:inline-flex;align-items:center;height:26px;padding:0 14px;border:1px solid var(--line);background:var(--tile);border-radius:99px;font-family:var(--f-head);font-weight:700;font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;min-width:112px;justify-self:start;width:fit-content}
+
+/* ---------- HERO STAGE ---------- */
+.stage{position:relative;height:370vh}
+.pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;grid-template-rows:auto auto 1fr auto;padding-inline:var(--gutter);padding-block:26px 30px}
+.boards{position:absolute;inset:0;z-index:1;pointer-events:none}
+.pin > :not(.boards):not(.glow):not(.pageno){position:relative;z-index:2}
+
+.glow{position:absolute;z-index:0;top:-12vh;right:-10vw;width:min(58vw,640px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 45%,rgba(168,208,232,.75),rgba(91,127,163,.32) 38%,rgba(182,95,103,.06) 60%,transparent 70%);filter:blur(28px);pointer-events:none}
+.pageno{position:absolute;z-index:0;top:clamp(120px,18vh,180px);right:var(--gutter);font-family:var(--f-name);font-weight:800;font-size:clamp(90px,13vw,150px);line-height:.8;letter-spacing:-.04em;color:rgba(91,127,163,.2);pointer-events:none}
+
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+.logo{font-family:var(--f-name);font-weight:800;font-size:22px;line-height:.78;letter-spacing:-.02em;padding-top:2px}
+.nav{display:flex;align-items:center;gap:clamp(14px,2vw,20px);padding-top:10px}
+.nav a{font-family:var(--f-head);font-weight:600;font-size:10.5px;letter-spacing:.1em;position:relative}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.nav a:hover::after{transform:scaleX(1)}
+.count{font-family:var(--f-body);font-size:10px;color:var(--muted);margin-left:clamp(20px,7vw,90px);font-variant-numeric:tabular-nums}
+
+.intro{display:grid;gap:26px;padding-top:40px;align-content:start}
+.role{font-family:var(--f-head);font-weight:700;font-size:13px;line-height:1.2;text-transform:uppercase;letter-spacing:.01em}
+
+.center{display:grid;align-content:center;padding-left:clamp(0px,24vw,340px);gap:clamp(24px,5vh,52px)}
+.name{margin:0;font-family:var(--f-name);font-weight:700;font-size:clamp(64px,11.6vw,176px);line-height:.84;letter-spacing:-.045em;text-transform:uppercase}
+.name span{display:block}
+.lede{margin:0;justify-self:end;max-width:380px;font-size:clamp(15px,1.25vw,17.5px);line-height:1.45;color:var(--ink);text-wrap:pretty}
+.scroll{display:flex;align-items:center;gap:8px}
+.scroll i{display:inline-block;font-style:normal;animation:nudge 2.4s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* design boards that stack over the pinned name */
+.board{position:absolute;left:50%;top:50%;width:min(44vw,560px);aspect-ratio:4/3;max-width:100%;border-radius:14px;overflow:hidden;
+  box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 30px 60px -28px rgba(38,52,77,.35),0 8px 18px -10px rgba(17,17,17,.18);
+  transform:translate3d(-50%,120vh,0);will-change:transform}
+.board .tex{position:absolute;inset:0;background-image:linear-gradient(rgba(17,17,17,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,17,.045) 1px,transparent 1px);background-size:32px 32px}
+.board .blob{position:absolute;width:62%;aspect-ratio:1;border-radius:50%;filter:blur(30px);opacity:.8}
+.board .cap{position:absolute;left:16px;right:16px;display:flex;justify-content:space-between;font-family:var(--f-head);font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(17,17,17,.55)}
+.board .cap.t{top:14px}.board .cap.b{bottom:14px}
+.board .shade{position:absolute;inset:0;background:var(--navy);opacity:0}
+.board .visual{position:absolute;inset:46px 28px;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 18px 36px -24px rgba(17,17,17,.35)}
+.board .visual img{width:100%;height:100%;display:block;object-fit:cover}
+.board.b2 .visual img,.board.b3 .visual img{object-fit:contain;background:#f7f7f7}
+.b1{background:var(--card)}.b1 .blob{right:-8%;top:18%;background:radial-gradient(circle,rgba(160,210,232,.95),rgba(91,127,163,.35) 60%,transparent 72%)}
+.b2{background:var(--card-2)}.b2 .blob{left:-10%;bottom:-20%;background:radial-gradient(circle,rgba(247,245,242,.8),transparent 70%)}
+.b3{background:var(--card-3)}.b3 .blob{right:6%;top:-18%;background:radial-gradient(circle,rgba(182,95,103,.42),rgba(182,95,103,.08) 60%,transparent 72%)}
+
+/* ---------- SELECTED WORK ---------- */
+.section{padding-block:clamp(80px,12vw,150px) 0}
+.work-grid{display:grid;grid-template-columns:1.92fr .93fr 1fr;gap:18px;margin-top:38px}
+.proj{position:relative;min-height:clamp(300px,31vw,340px);border-radius:var(--radius);overflow:hidden;padding:16px;display:grid;grid-template-rows:auto 1fr auto;will-change:transform;transition:box-shadow .5s}
+.proj:hover{box-shadow:0 24px 50px -30px rgba(38,52,77,.45)}
+.proj .no{font-size:10px;color:rgba(17,17,17,.55);font-variant-numeric:tabular-nums}
+.proj .dot{position:absolute;top:16px;right:16px;width:12px;height:12px;border-radius:50%;background:var(--blue);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.proj:hover .dot{transform:scale(1.5)}
+.proj h3{margin:0;align-self:center;position:relative;z-index:1;font-family:var(--f-head);font-weight:800;font-size:clamp(24px,2.5vw,30px);line-height:.92;letter-spacing:-.03em;text-transform:uppercase}
+.proj.big h3{font-size:clamp(34px,4.2vw,50px)}
+.proj .tags{position:relative;z-index:1;font-size:10px;color:rgba(17,17,17,.62)}
+.proj .pblob{position:absolute;border-radius:50%;filter:blur(26px);pointer-events:none;will-change:transform}
+.proj .thumb{position:absolute;right:16px;bottom:42px;width:48%;height:48%;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 16px 30px -22px rgba(17,17,17,.45);transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.proj .thumb img{width:100%;height:100%;display:block;object-fit:cover}
+.proj .thumb.contain img{object-fit:contain;background:#f8f8f7}
+.proj:hover .thumb{transform:translateY(-6px) rotate(-1deg)}
+.proj.has-thumb h3{align-self:start;margin-top:25%}
+.p1{background:#E3DFDA}.p1 .pblob{width:42%;aspect-ratio:.72;right:3%;top:10%;background:radial-gradient(ellipse,rgba(160,212,232,.95),rgba(91,127,163,.35) 55%,transparent 72%);transform:rotate(-24deg)}
+.p2{background:var(--card-2)}
+.p3{background:var(--card)}.p3 .pblob{width:70%;aspect-ratio:1;left:-20%;bottom:-30%;background:radial-gradient(circle,rgba(182,95,103,.22),transparent 70%)}
+
+/* ---------- WHAT I DO: pinned wipe ---------- */
+.reveal{position:relative;height:210vh}
+.reveal-pin{position:sticky;top:0;height:100vh;height:100svh;display:grid;align-content:center;gap:clamp(28px,5vh,48px);padding-inline:var(--gutter)}
+.reveal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.reveal-note{font-family:var(--f-head);font-weight:700;font-size:9.5px;letter-spacing:.12em;line-height:1.5;text-transform:uppercase}
+.wipe{margin:0;font-family:var(--f-head);font-weight:800;font-size:clamp(32px,6.3vw,100px);line-height:1.02;letter-spacing:-.035em;text-transform:uppercase}
+.wipe .ln{display:block;width:fit-content;max-width:100%;--p:0;
+  color:var(--ghost);
+  background:linear-gradient(90deg,var(--navy) 0,var(--navy) calc(var(--p)*112% - 12%),var(--ghost) calc(var(--p)*112%),var(--ghost) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.wipe .ln + .ln{margin-left:clamp(0px,7.5vw,110px);margin-top:.18em}
+
+/* ---------- ABOUT ---------- */
+.about-panel{display:grid;grid-template-columns:minmax(230px,.72fr) 1.28fr;gap:clamp(28px,6vw,84px);align-items:center;padding-top:clamp(78px,10vw,130px)}
+.portrait-wrap{position:relative;max-width:430px}
+.portrait-wrap::before{content:"";position:absolute;inset:8% -8% -8% 8%;border-radius:22px;background:linear-gradient(145deg,#d6e7f3,#e8dedc);z-index:-1}
+.portrait{display:block;width:100%;aspect-ratio:4/4.5;object-fit:cover;object-position:center 32%;border-radius:22px;filter:saturate(.84) contrast(1.02)}
+.about-copy{display:grid;gap:24px}
+.about-copy h2{margin:0;font-family:var(--f-head);font-weight:800;font-size:clamp(34px,5vw,72px);line-height:.95;letter-spacing:-.04em;text-transform:uppercase}
+.about-copy p{margin:0;max-width:62ch;font-size:clamp(15px,1.35vw,18px);line-height:1.7;color:#393735}
+.details{display:flex;gap:10px;flex-wrap:wrap}
+.detail{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border:1px solid var(--line);border-radius:99px;background:var(--tile);font-size:12px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:99px;background:var(--ink);color:#fff;font-family:var(--f-head);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:transform .3s,background .3s}
+.button.secondary{background:transparent;color:var(--ink);border:1px solid #cfcac4}
+.button:hover{transform:translateY(-2px);background:var(--blue);color:#fff}
+
+/* ---------- CAPABILITIES ---------- */
+.caps{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px;margin-top:34px}
+.cap-card{position:relative;background:var(--tile);border:1px solid var(--line);border-radius:14px;min-height:104px;padding:14px 14px 16px;display:grid;grid-template-rows:auto 1fr;transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .4s,box-shadow .5s}
+.cap-card:hover{transform:translateY(-3px);border-color:#D6D1CB;box-shadow:0 18px 36px -26px rgba(38,52,77,.4)}
+.cap-card .no{font-size:9.5px;color:#9A958F;font-variant-numeric:tabular-nums}
+.cap-card .sq{position:absolute;top:14px;right:14px;width:10px;height:10px;border-radius:2.5px;background:var(--ink);transition:background .4s}
+.cap-card:hover .sq,.cap-card.hot .sq{background:var(--blue)}
+.cap-card h4{margin:0;align-self:end;font-family:var(--f-head);font-weight:800;font-size:clamp(15px,1.45vw,18px);letter-spacing:-.02em;text-transform:uppercase}
+.s4{grid-column:span 4}.s3{grid-column:span 3}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}
+
+/* ---------- FOOTER ---------- */
+footer{margin-top:clamp(90px,12vw,140px);background:var(--foot);color:var(--foot-ink);padding-inline:var(--gutter);padding-block:clamp(36px,5vw,56px) clamp(30px,4vw,44px);display:grid;grid-template-columns:1fr auto;gap:28px 40px;align-items:end}
+.foot-brand{display:flex;align-items:center;gap:clamp(14px,2vw,26px);min-width:0}
+.foot-avatar{flex:0 0 auto;width:clamp(62px,7vw,104px);height:clamp(62px,7vw,104px);border-radius:50%;object-fit:cover;background:#fff}
+.foot-name{margin:0;font-family:var(--f-name);font-weight:700;font-size:clamp(46px,8.6vw,124px);line-height:.86;letter-spacing:-.045em;text-transform:uppercase}
+.foot-meta{display:grid;gap:18px;justify-items:start;padding-bottom:6px}
+.foot-meta nav{display:flex;gap:18px}
+.foot-meta nav a{font-family:var(--f-head);font-weight:600;font-size:10.5px;letter-spacing:.12em}
+.foot-meta nav a:hover{color:#C9D6E4}
+.foot-meta p{margin:0;font-size:11px;line-height:1.6;color:var(--foot-muted);text-transform:uppercase;letter-spacing:.02em}
+.foot-meta .mail{color:var(--foot-ink);user-select:all}
+.foot-contact{display:grid;gap:3px}
+.foot-contact a:hover{color:#C9D6E4}
+.foot-base{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid rgba(247,245,242,.14);padding-top:18px;font-size:10px;color:var(--foot-muted);letter-spacing:.08em;text-transform:uppercase}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:900px){
+  .work-grid{grid-template-columns:1fr 1fr}
+  .proj.big{grid-column:1/-1}
+  .s4,.s3,.s5{grid-column:span 6}.s6,.s7{grid-column:span 6}
+  .board{width:min(62vw,520px)}
+}
+@media (max-width:600px){
+  .count{display:none}
+  .nav{gap:14px;padding-top:6px}
+  .logo{font-size:19px}
+  .intro{padding-top:28px;gap:18px}
+  .center{padding-left:0;align-content:center}
+  .name{font-size:clamp(58px,19vw,96px)}
+  .lede{justify-self:start;max-width:34ch}
+  .pageno{top:auto;bottom:64px;font-size:84px}
+  .glow{width:90vw;top:-6vh;right:-30vw}
+  .board{width:78vw}
+  .board .visual{inset:42px 18px}
+  .work-grid{grid-template-columns:1fr}
+  .proj{min-height:260px}
+  .caps{grid-template-columns:1fr 1fr;gap:12px}
+  .caps .cap-card{grid-column:auto}
+  .cap-card{min-height:92px}
+  .stage{height:330vh}
+  .reveal{height:180vh}
+  footer{grid-template-columns:1fr}
+  .foot-brand{gap:12px}
+  .foot-avatar{width:58px;height:58px}
+  .wipe .ln + .ln{margin-left:0}
+  .about-panel{grid-template-columns:1fr}
+  .portrait-wrap{max-width:310px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .scroll i{animation:none}
+  .stage{height:auto}
+  .pin{position:relative;height:auto;min-height:100svh}
+  .boards{display:none}
+  .reveal{height:auto}
+  .reveal-pin{position:relative;height:auto;padding-block:clamp(80px,12vw,140px) 0}
+  .wipe .ln{--p:1}
+}
+</style>
+</head>
+<body>
+
+<main>
+  <!-- HERO: name holds still, boards stack over it -->
+  <section class="stage" id="top" aria-label="Introduction">
+    <div class="pin">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="pageno" aria-hidden="true">01</div>
+
+      <div class="boards" aria-hidden="true">
+        <div class="board b1"><div class="tex"></div><div class="blob"></div><div class="visual"><img src="assets/metroseed-project.jpg" alt=""></div><div class="shade"></div>
+          <div class="cap t"><span>01 — MetroSEED</span><span>Web Design</span></div>
+          <div class="cap b"><span>Naga City</span><span>Interface → Build</span></div></div>
+        <div class="board b2"><div class="tex"></div><div class="blob"></div><div class="visual"><img src="assets/brew-haven-advertisement.jpg" alt=""></div><div class="shade"></div>
+          <div class="cap t"><span>02 — Brew Haven</span><span>Advertisement</span></div>
+          <div class="cap b"><span>Pistachio Matcha</span><span>Campaign Layout</span></div></div>
+        <div class="board b3"><div class="tex"></div><div class="blob"></div><div class="visual"><img src="assets/unc-scis-lanyard.jpg" alt=""></div><div class="shade"></div>
+          <div class="cap t"><span>03 — UNC SCIS</span><span>Graphic Design</span></div>
+          <div class="cap b"><span>Identity Piece</span><span>Lanyard System</span></div></div>
+      </div>
+
+      <header class="top">
+        <a class="logo" href="#top" aria-label="Jerome Robles, home">ROBLES<br>JEROME</a>
+        <nav class="nav" aria-label="Main">
+          <a href="#work">WORK</a>
+          <a href="#about">ABOUT</a>
+          <a href="#contact">CONTACT</a>
+          <span class="count">01 / 04</span>
+        </nav>
+      </header>
+
+      <div class="intro">
+        <span class="chip">Portfolio 2026</span>
+        <p class="role" style="margin:0">Web Developer &amp;<br>Graphic Designer</p>
+      </div>
+
+      <div class="center">
+        <h1 class="name"><span>Jerome</span><span>Robles</span></h1>
+        <p class="lede">I blend strategy, visual storytelling, web development, and graphic design to build digital experiences and brands people remember.</p>
+      </div>
+
+      <div class="scroll label">Scroll to explore <i aria-hidden="true">↓</i></div>
+    </div>
+  </section>
+
+  <!-- SELECTED WORK -->
+  <section class="section wrap" id="work" aria-labelledby="work-h">
+    <h2 class="label" id="work-h" style="margin:0">Selected work / 03</h2>
+    <div class="work-grid">
+      <a class="proj p1 big has-thumb" href="#about-details" data-par="0">
+        <span class="pblob" aria-hidden="true"></span>
+        <span class="no">01</span><span class="dot" aria-hidden="true"></span>
+        <span class="thumb"><img src="assets/metroseed-project.jpg" alt="MetroSEED youth employment website interface"></span>
+        <h3>Metro<br>SEED</h3>
+        <span class="tags">Web development · UI design</span>
+      </a>
+      <a class="proj p2 has-thumb" href="#about-details" data-par="1">
+        <span class="no">02</span><span class="dot" aria-hidden="true"></span>
+        <span class="thumb contain"><img src="assets/brew-haven-advertisement.jpg" alt="Brew Haven pistachio matcha anniversary advertisement"></span>
+        <h3>Brew<br>Haven</h3>
+        <span class="tags">Advertisement · Campaign layout</span>
+      </a>
+      <a class="proj p3" href="#about-details" data-par="2">
+        <span class="pblob" aria-hidden="true"></span>
+        <span class="no">03</span><span class="dot" aria-hidden="true"></span>
+        <h3>More Work<br>Coming Soon</h3>
+        <span class="tags">Learning · Building · Improving</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap about-panel" id="about-details" aria-labelledby="about-title">
+    <div class="portrait-wrap">
+      <img class="portrait" src="assets/jerome-portrait.jpg" alt="Portrait of Jerome Robles">
+    </div>
+    <div class="about-copy">
+      <span class="chip">About me</span>
+      <h2 id="about-title">Designing with purpose. Building with care.</h2>
+      <p>I’m Jerome G. Robles, an Information Technology student based in Naga City, Philippines. I combine web development, graphic design, and layout skills to create clear, useful digital experiences. I’m always learning, improving my craft, and ready to contribute to meaningful projects.</p>
+      <div class="details" aria-label="Professional details">
+        <span class="detail">Naga City, Philippines</span>
+        <span class="detail">BS Information Technology</span>
+        <span class="detail">Available for opportunities</span>
+      </div>
+      <div class="actions">
+        <a class="button" href="mailto:jeromegaliciarobles@gmail.com">Email me</a>
+        <a class="button secondary" href="assets/jerome-robles-resume.jpg" target="_blank" rel="noopener">View résumé</a>
+        <a class="button secondary" href="https://www.linkedin.com/in/jerome-robles-144816396/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT I DO: pinned left-to-right wipe -->
+  <section class="reveal" id="about" aria-labelledby="about-h">
+    <div class="reveal-pin">
+      <div class="reveal-head">
+        <span class="chip">What I do</span>
+        <p class="reveal-note" style="margin:0">Strategy / Design / Code<br>Available for select projects</p>
+      </div>
+      <h2 class="wipe" id="about-h">
+        <span class="ln">Web Developer</span>
+        <span class="ln">And Graphic Designer</span>
+      </h2>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section class="section wrap" aria-labelledby="caps-h">
+    <h2 class="label" id="caps-h" style="margin:0">Capabilities</h2>
+    <div class="caps">
+      <div class="cap-card s5"><span class="no">01</span><span class="sq"></span><h4>Social Strategy</h4></div>
+      <div class="cap-card s3"><span class="no">02</span><span class="sq"></span><h4>Brand Voice</h4></div>
+      <div class="cap-card s4"><span class="no">03</span><span class="sq"></span><h4>Content Systems</h4></div>
+      <div class="cap-card s3"><span class="no">04</span><span class="sq"></span><h4>Campaigns</h4></div>
+      <div class="cap-card s5 hot"><span class="no">05</span><span class="sq"></span><h4>Web Development</h4></div>
+      <div class="cap-card s4"><span class="no">06</span><span class="sq"></span><h4>Graphic Design</h4></div>
+      <div class="cap-card s7"><span class="no">07</span><span class="sq"></span><h4>Product Design</h4></div>
+      <div class="cap-card s5"><span class="no">08</span><span class="sq"></span><h4>Art Direction</h4></div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="foot-brand">
+    <img class="foot-avatar" src="assets/jerome-memoji-footer.jpg" alt="Jerome Robles Memoji">
+    <p class="foot-name">Jerome Robles</p>
+  </div>
+  <div class="foot-meta">
+    <nav aria-label="Footer">
+      <a href="#work">WORK</a><a href="#about-details">ABOUT</a><a href="https://www.linkedin.com/in/jerome-robles-144816396/" target="_blank" rel="noopener">LINKEDIN ↗</a><a href="#top">TOP ↑</a>
+    </nav>
+    <p class="foot-contact">Let’s create something useful and memorable.
+      <a class="mail" href="mailto:jeromegaliciarobles@gmail.com">jeromegaliciarobles@gmail.com</a>
+      <a href="tel:+639100531466">+63 910 053 1466</a>
+      <span>Naga City, Philippines</span>
+    </p>
+  </div>
+  <div class="foot-base"><span>© 2026 Jerome Robles</span><span>Web Developer &amp; Graphic Designer</span></div>
+</footer>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  const clamp = (v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+  const lerp  = (a,b,t)=>a+(b-a)*t;
+  const ease  = t=>1-Math.pow(1-t,3);            // easeOutCubic
+  const easeIO= t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+
+  // --- elements
+  const stage = document.querySelector('.stage');
+  const boards = [...document.querySelectorAll('.board')];
+  const shades = boards.map(b=>b.querySelector('.shade'));
+  const reveal = document.querySelector('.reveal');
+  const lines  = [...document.querySelectorAll('.wipe .ln')];
+  const projs  = [...document.querySelectorAll('.proj')];
+  const pblobs = projs.map(p=>p.querySelector('.pblob'));
+
+  // rest positions of each board, as fractions of the viewport (x, y) + rotation
+  const rest = [
+    {x:-.17, y:.08, r:-4.5},
+    {x: .15, y:-.03, r: 3.2},
+    {x:-.01, y:.12, r:-1.2}
+  ];
+  const restMobile = [
+    {x:-.05, y:.10, r:-4},
+    {x: .06, y:.02, r: 3},
+    {x: 0,   y:.16, r:-1}
+  ];
+
+  // smoothed values (lerped toward targets each frame for a soft, premium feel)
+  const s = { stage:0, reveal:0, proj: projs.map(()=>0) };
+
+  function targets(){
+    const vh = innerHeight;
+    const sr = stage.getBoundingClientRect();
+    const st = clamp(-sr.top / (stage.offsetHeight - vh));
+    const rr = reveal.getBoundingClientRect();
+    const rv = clamp(-rr.top / (reveal.offsetHeight - vh));
+    const pv = projs.map((p,i)=>{
+      const r = p.getBoundingClientRect();
+      return clamp((vh - r.top) / (vh*.75) - i*.06);
+    });
+    return {st, rv, pv};
+  }
+
+  function render(){
+    const vw = innerWidth, vh = innerHeight;
+    const R = vw < 600 ? restMobile : rest;
+
+    // 1+2: stacking boards over the pinned name
+    const n = boards.length;
+    const ts = boards.map((_,i)=>{
+      const start = .04 + i*.26, end = start + .34;
+      return easeIO(clamp((s.stage - start)/(end - start)));
+    });
+    boards.forEach((b,i)=>{
+      const t = ts[i];
+      // how many boards have landed on top of this one
+      let depth = 0; for(let j=i+1;j<n;j++) depth += ts[j];
+      const x = R[i].x * vw;
+      const y = lerp(vh*1.05, R[i].y*vh, t) - depth*vh*.025;
+      const rot = R[i].r + (1-t)*7;
+      const sc = (0.94 + t*.06) * (1 - depth*.035);
+      b.style.transform = `translate3d(calc(-50% + ${x.toFixed(1)}px), calc(-50% + ${y.toFixed(1)}px),0) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
+      shades[i].style.opacity = (depth*.07).toFixed(3);
+    });
+
+    // 3: left-to-right wipe, line by line
+    const p1 = clamp(s.reveal/.48), p2 = clamp((s.reveal-.42)/.5);
+    lines[0].style.setProperty('--p', p1.toFixed(4));
+    if (lines[1]) lines[1].style.setProperty('--p', p2.toFixed(4));
+
+    // 4: project cards rise + scale in, blobs drift (parallax)
+    projs.forEach((p,i)=>{
+      const e = ease(s.proj[i]);
+      p.style.transform = `translate3d(0,${((1-e)*90).toFixed(1)}px,0) scale(${(0.94+e*.06).toFixed(4)})`;
+      if (pblobs[i]){
+        const r = p.getBoundingClientRect();
+        const off = (r.top + r.height/2 - vh/2) * -.12;
+        pblobs[i].style.translate = `0 ${off.toFixed(1)}px`;
+      }
+    });
+  }
+
+  let first = true;
+  function frame(){
+    const t = targets();
+    const k = first ? 1 : .12;       // smoothing factor
+    first = false;
+    s.stage  = lerp(s.stage,  t.st, k);
+    s.reveal = lerp(s.reveal, t.rv, k);
+    s.proj   = s.proj.map((v,i)=>lerp(v, t.pv[i], k));
+    render();
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
